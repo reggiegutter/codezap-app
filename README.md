@@ -4,17 +4,19 @@ Code Zap é uma nova maneira de aprender programação de um jeito fácil e de g
 
    
 
+- **Apresentação:** https://www.youtube.com/watch?v=b2_YVIYHFG8
+- **Repositórios**
+    - **Backend:** https://github.com/reggiegutter/codezap
+    - **App:** https://github.com/reggiegutter/codezap-app
 - **WebSite**
     - **Link:**  https://codezap.com.br/
     - **Whois:** https://registro.br/tecnologia/ferramentas/whois/?search=codezap.com.br
     - **Registro 26/11:** https://prnt.sc/q2u0na
-- Logo Desenvolvida
+- **Logo Desenvolvida**
     - **Pasta Fontes:** https://drive.google.com/drive/folders/1VRqNJmJNh5bCfLibdwFTBs68BlnOnYIB?usp=sharing
-- Apresentação do Negócio
+- **Apresentação do Negócio**
     - **Pitchdeck:** https://docs.google.com/presentation/d/1RN6OrEFtX7c-GeIn6bxjyYDlCXAZTndSegPkIETNQr0/edit?usp=sharing
-- Repositórios
-    - **Backend:** https://github.com/reggiegutter/codezap
-    - **App:** https://github.com/reggiegutter/codezap-app
+
 
     
 
