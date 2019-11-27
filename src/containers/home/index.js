@@ -28,7 +28,7 @@ export default function({navigation}) {
 
         try {
           const {data} = await API.get('/chat');
-          await AsyncStorage.setItem('@uid', data.session_id);
+          await AsyncStorage.setItem('@sessionId', data.session_id);
 
           setIsSending(false);
 
@@ -36,7 +36,7 @@ export default function({navigation}) {
             routeName: 'Questions',
           });
         } catch (error) {
-          await AsyncStorage.setItem('@uid', null);
+          await AsyncStorage.setItem('@sessionId', null);
           setIsSending(false);
         }
       };
