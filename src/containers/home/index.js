@@ -28,7 +28,7 @@ export default function({navigation}) {
 
         try {
           const {data} = await API.get('/chat');
-          await AsyncStorage.setItem('@sessionId', data.session_id);
+          await AsyncStorage.setItem('@uid', data.session_id);
 
           setIsSending(false);
 
@@ -36,7 +36,7 @@ export default function({navigation}) {
             routeName: 'Questions',
           });
         } catch (error) {
-          await AsyncStorage.setItem('@sessionId', null);
+          await AsyncStorage.setItem('@uid', null);
           setIsSending(false);
         }
       };
@@ -48,9 +48,49 @@ export default function({navigation}) {
 
   return (
     <>
-      <Loader loading={isSending} color="#5304af" />
+      <Loader loading={isSending} />
       <View style={{flex: 1}}>
+        <View style={{backgroundColor: '#5304af'}}>
+          <SafeAreaView style={{flex: 1}}></SafeAreaView>
+        </View>
         <SafeAreaView style={{flex: 1}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              height: 55,
+              backgroundColor: '#5304af',
+              justifyContent: 'space-between',
+            }}>
+            <View></View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: 150,
+              }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image
+                  source={require('../../images/crown.png')}
+                  style={{height: 35, width: 35}}
+                />
+                <Text
+                  style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>
+                  1
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image
+                  source={require('../../images/trofeu.png')}
+                  style={{height: 35, width: 35}}
+                />
+                <Text
+                  style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>
+                  10
+                </Text>
+              </View>
+            </View>
+            <View></View>
+          </View>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
@@ -124,9 +164,9 @@ export default function({navigation}) {
                       justifyContent: 'center',
                     }}>
                     <Image
-                      source={Egg}
+                      source={require('../../images/18_book_education_code_development_developer_programmer.png')}
                       resizeMode="contain"
-                      style={{width: 70}}
+                      style={{width: 60}}
                     />
                   </View>
                   <Text
@@ -157,9 +197,9 @@ export default function({navigation}) {
                     justifyContent: 'center',
                   }}>
                   <Image
-                    source={Egg}
+                    source={require('../../images/21_education_graduate_cap_code_development_developer_programmer.png')}
                     resizeMode="contain"
-                    style={{width: 70}}
+                    style={{width: 60}}
                   />
                 </View>
                 <Text
@@ -197,9 +237,9 @@ export default function({navigation}) {
                     justifyContent: 'center',
                   }}>
                   <Image
-                    source={Egg}
+                    source={require('../../images/20_block_diagram_notebook_code_development_developer_programmer.png')}
                     resizeMode="contain"
-                    style={{width: 70}}
+                    style={{width: 60}}
                   />
                 </View>
                 <Text
@@ -229,9 +269,9 @@ export default function({navigation}) {
                     justifyContent: 'center',
                   }}>
                   <Image
-                    source={Egg}
+                    source={require('../../images/22_website_structure_code_development_developer_programmer.png')}
                     resizeMode="contain"
-                    style={{width: 70}}
+                    style={{width: 58}}
                   />
                 </View>
                 <Text
@@ -261,9 +301,9 @@ export default function({navigation}) {
                     justifyContent: 'center',
                   }}>
                   <Image
-                    source={Egg}
+                    source={require('../../images/13_table_laptop_code_development_developer_programmer.png')}
                     resizeMode="contain"
-                    style={{width: 70}}
+                    style={{width: 58}}
                   />
                 </View>
                 <Text
@@ -302,7 +342,7 @@ export default function({navigation}) {
                     marginLeft: Dimensions.get('window').width / 3.5,
                   }}>
                   <Image
-                    source={Egg}
+                    source={require('../../images/3_man_code_development_developer_programmer.png')}
                     resizeMode="contain"
                     style={{width: 60}}
                   />
