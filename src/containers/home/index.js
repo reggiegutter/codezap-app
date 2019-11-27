@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from 'react-native-modal-loader';
+
 import API from '../../config/api';
 import Egg from '../../images/egg.png';
 
@@ -26,7 +28,7 @@ export default function({navigation}) {
 
         try {
           const {data} = await API.get('/chat');
-          await AsyncStorage.setItem('@uid', data.session_id);
+          await AsyncStorage.setItem('@sessionId', data.session_id);
 
           setIsSending(false);
 
@@ -34,7 +36,7 @@ export default function({navigation}) {
             routeName: 'Questions',
           });
         } catch (error) {
-          await AsyncStorage.setItem('@uid', null);
+          await AsyncStorage.setItem('@sessionId', null);
           setIsSending(false);
         }
       };
@@ -45,23 +47,100 @@ export default function({navigation}) {
   );
 
   return (
-    <View style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          style={{
-            paddingHorizontal: 15,
-            paddingTop: 20,
-          }}
-          contentContainerStyle={{paddingBottom: 60}}>
-          <View
+    <>
+      <Loader loading={isSending} color="#5304af" />
+      <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <TouchableWithoutFeedback onPress={() => getChat('level1')}>
+              paddingHorizontal: 15,
+              paddingTop: 20,
+            }}
+            contentContainerStyle={{paddingBottom: 60}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <TouchableWithoutFeedback onPress={() => getChat('level1')}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                  }}>
+                  <View
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 45,
+                      backgroundColor: '#0092cc',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={Egg}
+                      resizeMode="contain"
+                      style={{width: 70}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: '#606060',
+                      fontSize: 16,
+                      marginTop: 10,
+                      fontWeight: '700',
+                    }}>
+                    Nível 1
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingTop: 20,
+              }}>
+              <TouchableWithoutFeedback onPress={() => getChat('level2')}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                  }}>
+                  <View
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 45,
+                      backgroundColor: '#0092cc',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={Egg}
+                      resizeMode="contain"
+                      style={{width: 70}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      color: '#606060',
+                      fontSize: 16,
+                      marginTop: 10,
+                      fontWeight: '700',
+                    }}>
+                    Nível 2
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
               <View
                 style={{
                   justifyContent: 'center',
@@ -73,7 +152,7 @@ export default function({navigation}) {
                     width: 90,
                     height: 90,
                     borderRadius: 45,
-                    backgroundColor: '#0092cc',
+                    backgroundColor: '#909090',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
@@ -91,19 +170,17 @@ export default function({navigation}) {
                     marginTop: 10,
                     fontWeight: '700',
                   }}>
-                  Nível 1
+                  Nível 3
                 </Text>
               </View>
-            </TouchableWithoutFeedback>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 20,
-            }}>
-            <TouchableWithoutFeedback onPress={() => getChat('level2')}>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingTop: 20,
+              }}>
               <View
                 style={{
                   justifyContent: 'center',
@@ -115,7 +192,7 @@ export default function({navigation}) {
                     width: 90,
                     height: 90,
                     borderRadius: 45,
-                    backgroundColor: '#0092cc',
+                    backgroundColor: '#909090',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
@@ -133,336 +210,284 @@ export default function({navigation}) {
                     marginTop: 10,
                     fontWeight: '700',
                   }}>
-                  Nível 2
+                  Nível 4
                 </Text>
               </View>
-            </TouchableWithoutFeedback>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-              }}>
               <View
                 style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 45,
-                  backgroundColor: '#909090',
-                  alignItems: 'center',
                   justifyContent: 'center',
-                }}>
-                <Image source={Egg} resizeMode="contain" style={{width: 70}} />
-              </View>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: '#606060',
-                  fontSize: 16,
-                  marginTop: 10,
-                  fontWeight: '700',
-                }}>
-                Nível 3
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 20,
-            }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-              }}>
-              <View
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 45,
-                  backgroundColor: '#909090',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image source={Egg} resizeMode="contain" style={{width: 70}} />
-              </View>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: '#606060',
-                  fontSize: 16,
-                  marginTop: 10,
-                  fontWeight: '700',
-                }}>
-                Nível 4
-              </Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-              }}>
-              <View
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 45,
-                  backgroundColor: '#909090',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image source={Egg} resizeMode="contain" style={{width: 70}} />
-              </View>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: '#606060',
-                  fontSize: 16,
-                  marginTop: 10,
-                  fontWeight: '700',
-                }}>
-                Nível 5
-              </Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-              }}>
-              <View
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 45,
-                  backgroundColor: '#909090',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image source={Egg} resizeMode="contain" style={{width: 70}} />
-              </View>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: '#606060',
-                  fontSize: 16,
-                  marginTop: 10,
-                  fontWeight: '700',
-                }}>
-                Nível 6
-              </Text>
-            </View>
-          </View>
-          <View style={{paddingBottom: 20, paddingTop: 90}}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: '#f5f5f5',
-                paddingTop: 10,
-                paddingBottom: 30,
-                borderRadius: 8,
-              }}>
-              <View
-                style={{
-                  width: 110,
-                  height: 110,
-                  borderRadius: 55,
-                  backgroundColor: '#5304af',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderWidth: 15,
-                  borderColor: '#ffffff',
-                  position: 'absolute',
-                  marginTop: -60,
-                  marginLeft: Dimensions.get('window').width / 3.5,
-                }}>
-                <Image source={Egg} resizeMode="contain" style={{width: 60}} />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingTop: 60,
+                  paddingHorizontal: 10,
                 }}>
                 <View
                   style={{
-                    justifyContent: 'center',
+                    width: 90,
+                    height: 90,
+                    borderRadius: 45,
+                    backgroundColor: '#909090',
                     alignItems: 'center',
-                    paddingHorizontal: 10,
+                    justifyContent: 'center',
                   }}>
-                  <View
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 45,
-                      backgroundColor: '#909090',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Image
-                      source={Egg}
-                      resizeMode="contain"
-                      style={{width: 70}}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#606060',
-                      fontSize: 16,
-                      marginTop: 10,
-                      fontWeight: '700',
-                    }}>
-                    Nível 7
-                  </Text>
+                  <Image
+                    source={Egg}
+                    resizeMode="contain"
+                    style={{width: 70}}
+                  />
                 </View>
-                <View
+                <Text
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingHorizontal: 10,
+                    textAlign: 'center',
+                    color: '#606060',
+                    fontSize: 16,
+                    marginTop: 10,
+                    fontWeight: '700',
                   }}>
-                  <View
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 45,
-                      backgroundColor: '#909090',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Image
-                      source={Egg}
-                      resizeMode="contain"
-                      style={{width: 70}}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#606060',
-                      fontSize: 16,
-                      marginTop: 10,
-                      fontWeight: '700',
-                    }}>
-                    Nível 8
-                  </Text>
-                </View>
+                  Nível 5
+                </Text>
               </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
                   justifyContent: 'center',
-                  paddingTop: 20,
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
                 }}>
                 <View
                   style={{
-                    justifyContent: 'center',
+                    width: 90,
+                    height: 90,
+                    borderRadius: 45,
+                    backgroundColor: '#909090',
                     alignItems: 'center',
-                    paddingHorizontal: 10,
+                    justifyContent: 'center',
                   }}>
-                  <View
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 45,
-                      backgroundColor: '#909090',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Image
-                      source={Egg}
-                      resizeMode="contain"
-                      style={{width: 70}}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: '#606060',
-                      fontSize: 16,
-                      marginTop: 10,
-                      fontWeight: '700',
-                    }}>
-                    Nível 9
-                  </Text>
+                  <Image
+                    source={Egg}
+                    resizeMode="contain"
+                    style={{width: 70}}
+                  />
+                </View>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#606060',
+                    fontSize: 16,
+                    marginTop: 10,
+                    fontWeight: '700',
+                  }}>
+                  Nível 6
+                </Text>
+              </View>
+            </View>
+            <View style={{paddingBottom: 20, paddingTop: 90}}>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: '#f5f5f5',
+                  paddingTop: 10,
+                  paddingBottom: 30,
+                  borderRadius: 8,
+                }}>
+                <View
+                  style={{
+                    width: 110,
+                    height: 110,
+                    borderRadius: 55,
+                    backgroundColor: '#5304af',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderWidth: 15,
+                    borderColor: '#ffffff',
+                    position: 'absolute',
+                    marginTop: -60,
+                    marginLeft: Dimensions.get('window').width / 3.5,
+                  }}>
+                  <Image
+                    source={Egg}
+                    resizeMode="contain"
+                    style={{width: 60}}
+                  />
                 </View>
                 <View
                   style={{
-                    justifyContent: 'center',
+                    flexDirection: 'row',
                     alignItems: 'center',
-                    paddingHorizontal: 10,
+                    justifyContent: 'center',
+                    paddingTop: 60,
                   }}>
                   <View
                     style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 45,
-                      backgroundColor: '#909090',
-                      alignItems: 'center',
                       justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
                     }}>
-                    <Image
-                      source={Egg}
-                      resizeMode="contain"
-                      style={{width: 70}}
-                    />
+                    <View
+                      style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                        backgroundColor: '#909090',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        source={Egg}
+                        resizeMode="contain"
+                        style={{width: 70}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#606060',
+                        fontSize: 16,
+                        marginTop: 10,
+                        fontWeight: '700',
+                      }}>
+                      Nível 7
+                    </Text>
                   </View>
-                  <Text
+                  <View
                     style={{
-                      textAlign: 'center',
-                      color: '#606060',
-                      fontSize: 16,
-                      marginTop: 10,
-                      fontWeight: '700',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
                     }}>
-                    Nível 10
-                  </Text>
+                    <View
+                      style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                        backgroundColor: '#909090',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        source={Egg}
+                        resizeMode="contain"
+                        style={{width: 70}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#606060',
+                        fontSize: 16,
+                        marginTop: 10,
+                        fontWeight: '700',
+                      }}>
+                      Nível 8
+                    </Text>
+                  </View>
                 </View>
                 <View
                   style={{
-                    justifyContent: 'center',
+                    flexDirection: 'row',
                     alignItems: 'center',
-                    paddingHorizontal: 10,
+                    justifyContent: 'center',
+                    paddingTop: 20,
                   }}>
                   <View
                     style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 45,
-                      backgroundColor: '#909090',
-                      alignItems: 'center',
                       justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
                     }}>
-                    <Image
-                      source={Egg}
-                      resizeMode="contain"
-                      style={{width: 70}}
-                    />
+                    <View
+                      style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                        backgroundColor: '#909090',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        source={Egg}
+                        resizeMode="contain"
+                        style={{width: 70}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#606060',
+                        fontSize: 16,
+                        marginTop: 10,
+                        fontWeight: '700',
+                      }}>
+                      Nível 9
+                    </Text>
                   </View>
-                  <Text
+                  <View
                     style={{
-                      textAlign: 'center',
-                      color: '#606060',
-                      fontSize: 16,
-                      marginTop: 10,
-                      fontWeight: '700',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
                     }}>
-                    Nível 11
-                  </Text>
+                    <View
+                      style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                        backgroundColor: '#909090',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        source={Egg}
+                        resizeMode="contain"
+                        style={{width: 70}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#606060',
+                        fontSize: 16,
+                        marginTop: 10,
+                        fontWeight: '700',
+                      }}>
+                      Nível 10
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
+                    }}>
+                    <View
+                      style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                        backgroundColor: '#909090',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        source={Egg}
+                        resizeMode="contain"
+                        style={{width: 70}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#606060',
+                        fontSize: 16,
+                        marginTop: 10,
+                        fontWeight: '700',
+                      }}>
+                      Nível 11
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    </>
   );
 }

@@ -7,12 +7,10 @@ import Intro from './containers/intro';
 import Home from './containers/home';
 import Questions from './containers/questions';
 
-// const tabNavigator = createBottomTabNavigator()
-
 const Routes = createAppContainer(
   createStackNavigator(
     {
-      Intro: {screen: Home},
+      Intro: {screen: Intro},
       Home: {screen: Home},
       Questions: {screen: Questions},
     },
