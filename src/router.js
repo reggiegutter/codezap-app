@@ -1,15 +1,18 @@
 import {Easing, Animated} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+// import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import Intro from './containers/intro';
 import Home from './containers/home';
 import Questions from './containers/questions';
 
+// const tabNavigator = createBottomTabNavigator()
+
 const Routes = createAppContainer(
   createStackNavigator(
     {
-      Intro: {screen: Questions},
+      Intro: {screen: Home},
       Home: {screen: Home},
       Questions: {screen: Questions},
     },

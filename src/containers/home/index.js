@@ -9,17 +9,15 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import API from '../../config/api';
 import Egg from '../../images/egg.png';
 
 export default function({navigation}) {
-  const delay = () => new Promise(resolve => setTimeout(resolve, 1000));
-
   const [isSending, setIsSending] = useState(false);
 
   const getChat = useCallback(
     level => {
       const fetchChat = async () => {
-        console.tron.log(level);
         if (isSending) {
           return;
         }
@@ -27,8 +25,8 @@ export default function({navigation}) {
         setIsSending(true);
 
         try {
-          await delay(2000);
-          await AsyncStorage.setItem('uid', '123456');
+          const {data} = await API.get('/chat');
+          await AsyncStorage.setItem('@uid', data.session_id);
 
           setIsSending(false);
 
@@ -36,6 +34,7 @@ export default function({navigation}) {
             routeName: 'Questions',
           });
         } catch (error) {
+          await AsyncStorage.setItem('@uid', null);
           setIsSending(false);
         }
       };
@@ -74,7 +73,7 @@ export default function({navigation}) {
                     width: 90,
                     height: 90,
                     borderRadius: 45,
-                    backgroundColor: '#5304af',
+                    backgroundColor: '#0092cc',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
@@ -116,7 +115,7 @@ export default function({navigation}) {
                     width: 90,
                     height: 90,
                     borderRadius: 45,
-                    backgroundColor: '#5304af',
+                    backgroundColor: '#0092cc',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
@@ -266,6 +265,7 @@ export default function({navigation}) {
                 backgroundColor: '#f5f5f5',
                 paddingTop: 10,
                 paddingBottom: 30,
+                borderRadius: 8,
               }}>
               <View
                 style={{
